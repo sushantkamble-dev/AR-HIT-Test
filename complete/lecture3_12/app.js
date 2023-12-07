@@ -69,6 +69,17 @@ class App{
     	this.renderer.setSize( window.innerWidth, window.innerHeight );  
     }
     
+    loadChair(){
+        const loader = new GLTFLoader().setPath(this.assetsPath);
+		const self = this;
+        loader.load(
+            'chair.glb',
+            (gltf)=>{
+                console.log(gltf)
+            },
+        )
+    }
+
     loadKnight(){
 	    const loader = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
@@ -79,6 +90,7 @@ class App{
 			`knight2.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
+                console.log(gltf)
 				const object = gltf.scene.children[5];
 				
 				const options = {
@@ -120,7 +132,7 @@ class App{
     
     initScene(){
         this.reticle = new THREE.Mesh(
-            new THREE.RingBufferGeometry( 0.015, 0.02, 32 ).rotateX( - Math.PI / 2 ),
+            new THREE.RingBufferGeometry( 0.15, 0.2, 32 ).rotateX( - Math.PI / 2 ),
             new THREE.MeshBasicMaterial()
         );
         
@@ -129,6 +141,7 @@ class App{
         this.scene.add( this.reticle );
         
         this.loadKnight();
+        this.loadChair();
     }
     
     setupXR(){
@@ -224,9 +237,6 @@ class App{
 
         this.renderer.render( this.scene, this.camera );
         
-        /*if (this.knight.calculatedPath && this.knight.calculatedPath.length>0){
-            console.log( `path:${this.knight.calculatedPath[0].x.toFixed(2)}, ${this.knight.calculatedPath[0].y.toFixed(2)}, ${this.knight.calculatedPath[0].z.toFixed(2)} position: ${this.knight.object.position.x.toFixed(2)}, ${this.knight.object.position.y.toFixed(2)}, ${this.knight.object.position.z.toFixed(2)}`);
-        }*/
     }
 }
 
